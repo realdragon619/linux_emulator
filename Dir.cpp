@@ -151,7 +151,7 @@ public:
 	}
 	string pwd(Dir* dir,string user){
 		Stack s;
-		string path="";		
+		string path="";
 		if(dir->get_upper_dir()==NULL){
 			path=dir->to_name();
 		}else{
@@ -166,10 +166,12 @@ public:
 				if(user=="root"){
 					path+=s.pop()+"/";
 				}else{
-					s.pop();
-					path+=s.pop()+"/";
-					
-					
+					if(path==""){
+						s.pop();
+						path+=s.pop()+"/";
+					}else{
+						path+=s.pop()+"/";
+					}		
 				}
 			}	
 			
