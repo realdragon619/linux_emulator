@@ -149,7 +149,7 @@ public:
 			sub_point->set_current_dir(new_dir);			
 		}
 	}
-	string pwd(Dir* dir){
+	string pwd(Dir* dir,string user){
 		Stack s;
 		string path="";		
 		if(dir->get_upper_dir()==NULL){
@@ -163,7 +163,14 @@ public:
 				}
 			}
 			while(!s.is_empty()){
-				path+=s.pop()+"/";
+				if(user=="root"){
+					path+=s.pop()+"/";
+				}else{
+					s.pop();
+					path+=s.pop()+"/";
+					
+					
+				}
 			}	
 			
 		}
@@ -171,10 +178,14 @@ public:
 		return path;
 		
 	}
-	Dir* cd(Dir* dir, string dir_name){
+	Dir* cd(Dir* dir, string dir_name,string user){
 		Dir* point=dir;
 		Dir* sub_point=dir->get_sub_dir()->get_current_dir();
+				
 		if((dir_name=="..") && (point->get_upper_dir()!=NULL)){
+			if(user!="root" && point->get_upper_dir()->to_name()=="home"){
+				return point;
+			}
 			point=point->get_upper_dir();
 			return point;
 		}
@@ -380,16 +391,16 @@ public:
 	}
 
 
-	void exe_cmd(Dir** p_dir){
+	void exe_cmd(Dir** p_dir, string user){
 		Dir *temp=(*p_dir);
 		if(cmd=="mkdir"){
 			cmd_store.mkdir(&temp,parameter);
 		}else if(cmd=="cd"){
-			(*p_dir)=cmd_store.cd(temp,parameter);		
+			(*p_dir)=cmd_store.cd(temp,parameter,user);		
 		}else if(cmd=="ls"){
 			cmd_store.ls(temp);
 		}else if(cmd=="pwd"){
-			cout<<cmd_store.pwd(temp);
+			cout<<cmd_store.pwd(temp,user);
 		}else if(cmd=="rmdir"){
 			cmd_store.rmdir(&temp,parameter);
 		}else if(cmd=="cat"){

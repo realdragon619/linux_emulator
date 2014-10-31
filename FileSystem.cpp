@@ -17,7 +17,7 @@ public:
 		select_num=0;
 	}
 	void save(){
-		ofs.open("test.txt");
+		ofs.open("dir_tree.txt");
 		Dir* dir_node;
 		d_file* file_node;
 		Cmd cmd;
@@ -28,7 +28,7 @@ public:
 		while((dir_node->get_current_dir()!=NULL) || (file_node!=NULL) 
 			|| (dir_copy->get_upper_dir()!=NULL)){		
 				if(file_node!=NULL || dir_node->get_current_dir()!=NULL){
-					ofs << "--"+cmd.pwd(dir_copy)+"~";
+					ofs << "--"+cmd.pwd(dir_copy,"root")+"~";
 				}
 				while(file_node!=NULL){
 					ofs << "@#" +file_node->get_name()+"/"+file_node->get_content()+"~";
@@ -77,7 +77,7 @@ public:
 	Dir* load(){
 		char c;
 		int count;
-		ifs.open("test.txt");
+		ifs.open("dir_tree.txt");
 		string file_content="";
 		string buffer1;
 		string buffer2="";
@@ -107,7 +107,7 @@ public:
 				file_content="";
 				
 				for(int i=1; i<count; i++){
-					dir_copy = cmd.cd(dir_copy,split[i]);
+					dir_copy = cmd.cd(dir_copy,split[i],"root");
 				}
 				
 			}else if(command=="|#"){
