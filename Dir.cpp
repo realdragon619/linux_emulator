@@ -202,6 +202,7 @@ public:
 		return dir;
 			
 	}
+	
 	void ls(Dir* dir){
 		PQueue p_queue;
 		Dir* sub_point=dir->get_sub_dir();
@@ -271,7 +272,7 @@ public:
 			}
 		}
 	}
-	void cp(Dir** dir, string copy_file, string origin_file){
+	void cp(Dir** dir, string origin_file,string copy_file){
 		d_file* point=(*dir)->explore_file();
 		d_file* copy_point=NULL;
 		string content="";
@@ -285,6 +286,8 @@ public:
 		}
 		if(copy_point!=NULL && (content!="")){
 			copy_point->set_content(content);
+		}else if(copy_point==NULL && (content!="")){
+			(*dir)->new_file(copy_file,content);
 		}
 	}
 	

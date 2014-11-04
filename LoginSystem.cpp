@@ -90,6 +90,7 @@ public:
 		cin>>user.pw;
 		ifs.open("login_info.txt",ios_base::app);
 		ifs<<endl<<user.id<<" "<<user.pw;
+		ifs.close();
 		cmd.mkdir(&point,user.id);
 		cin.get();
 	}

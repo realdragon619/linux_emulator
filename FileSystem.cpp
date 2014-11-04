@@ -28,7 +28,7 @@ public:
 		while((dir_node->get_current_dir()!=NULL) || (file_node!=NULL) 
 			|| (dir_copy->get_upper_dir()!=NULL)){		
 				if(file_node!=NULL || dir_node->get_current_dir()!=NULL){
-					ofs << "--"+cmd.pwd(dir_copy,"home")+"~";
+					ofs << "--"+cmd.pwd(dir_copy,"root")+"~";
 				}
 				while(file_node!=NULL){
 					ofs << "@#" +file_node->get_name()+"/"+file_node->get_content()+"~";
